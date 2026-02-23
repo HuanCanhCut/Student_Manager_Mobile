@@ -1,5 +1,6 @@
 package com.example.studentmanager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.example.studentmanager.utils.DTOs.HandleApiError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,8 +72,8 @@ public class LoginActivity extends BaseActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailValue = emailInput.getText().toString();
-                String passwordValue = passwordInput.getText().toString();
+                String emailValue = Objects.requireNonNull(emailInput.getText()).toString();
+                String passwordValue = Objects.requireNonNull(passwordInput.getText()).toString();
 
                 if (emailValue.trim().isEmpty() || passwordValue.trim().isEmpty()) {
                     errorMessage.setText("Vui lòng nhập đầy đủ các trường");
@@ -87,6 +90,12 @@ public class LoginActivity extends BaseActivity {
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+                            String accessToken = response.body() != null ? response.body().getMeta().getAccess_token() : null;
+
+                            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+                            prefs.edit().putString("access_token", accessToken).apply();
                         } else {
                             String errorMessage = HandleApiError.parse(response);
 
@@ -99,7 +108,7 @@ public class LoginActivity extends BaseActivity {
                         submitButton.setEnabled(true);
                         Toast.makeText(LoginActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        Log.d("LOGIN", t.getMessage());
+                        Log.d("LOGIN", Objects.requireNonNull(t.getMessage()));
                     }
                 });
             }
