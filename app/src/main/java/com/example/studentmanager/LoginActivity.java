@@ -8,19 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.network.ApiClient;
 import com.example.studentmanager.network.DTOs.request.LoginRequest;
 import com.example.studentmanager.network.DTOs.response.LoginResponse;
 import com.example.studentmanager.network.services.AuthService;
-import com.example.studentmanager.utils.DTOs.HandleApiError;
+import com.example.studentmanager.utils.EmailValidator;
+import com.example.studentmanager.utils.HandleApiError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Objects;
 
@@ -81,6 +78,12 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
 
+                boolean isEmailValid = EmailValidator.validate(emailValue);
+
+                if (!isEmailValid) {
+                    errorMessage.setText("Địa chỉ email không đúng định dạng, vui lòng nhập lại!");
+                }
+
                 LoginRequest request = new LoginRequest(emailInput.getText().toString(), passwordInput.getText().toString());
 
                 AuthService apiService = ApiClient.getInstance().create(AuthService.class);
@@ -96,6 +99,8 @@ public class LoginActivity extends BaseActivity {
                             SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
                             prefs.edit().putString("access_token", accessToken).apply();
+
+                            navigateTo(HomeActivity.class);
                         } else {
                             String errorMessage = HandleApiError.parse(response);
 

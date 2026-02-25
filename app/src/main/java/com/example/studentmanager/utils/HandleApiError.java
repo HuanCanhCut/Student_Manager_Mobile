@@ -1,4 +1,4 @@
-package com.example.studentmanager.utils.DTOs;
+package com.example.studentmanager.utils;
 
 import com.google.gson.Gson;
 
