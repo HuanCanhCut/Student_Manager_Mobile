@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity {
 
                 LoginRequest request = new LoginRequest(emailInput.getText().toString(), passwordInput.getText().toString());
 
-                AuthService apiService = ApiClient.getInstance().create(AuthService.class);
+                AuthService apiService = ApiClient.getInstance(LoginActivity.this).create(AuthService.class);
 
                 apiService.login(request).enqueue(new Callback<LoginResponse>() {
                     @Override
