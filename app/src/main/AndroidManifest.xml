@@ -15,7 +15,7 @@
         android:theme="@style/Theme.StudentManager"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HomeActivity"
+            android:name=".AcademicResultActivity"
             android:exported="false" />
         <activity
             android:name=".ForgotPasswordActivity"

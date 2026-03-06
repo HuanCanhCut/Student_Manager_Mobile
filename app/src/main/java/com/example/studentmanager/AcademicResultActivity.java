@@ -13,6 +13,7 @@ import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.network.ApiClient;
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
 import com.example.studentmanager.network.services.GradeService;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
@@ -20,10 +21,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends BaseActivity {
+public class AcademicResultActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HomeAdapter adapter;
+
+    boolean isSetGpa = false; // flag check only set gpa on first time
 
     @Override
     protected boolean enableImeInset() {
@@ -34,7 +37,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_academic_results);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -44,36 +47,65 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(false);
 
+
+        TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int index = tab.getPosition();
+                fetchSubjects(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
+
+        adapter = new HomeAdapter(10, listener);
+        recyclerView.setAdapter(adapter);
+
+        fetchSubjects(0); // 0: Học kì I, 1: Học kì 2, 2: Tất cà học kì
+
+    }
+
+    private void fetchSubjects(int tab) {
         GradeService apiService = ApiClient.getInstance(this).create(GradeService.class);
 
-        apiService.getGrades( 1, 10).enqueue(new Callback<GradeResponse>() {
+        apiService.getGrades(1, 10, null).enqueue(new Callback<GradeResponse>() {
             @Override
             public void onResponse(Call<GradeResponse> call, Response<GradeResponse> response) {
-                Log.d("IS SUCCESS", String.valueOf(response.isSuccessful()));
-
                 if (response.isSuccessful()) {
                     GradeResponse res = response.body();
 
-                    adapter = new HomeAdapter(res);
-                    recyclerView.setAdapter(adapter);
+                    assert res != null;
+
+                    if (!isSetGpa) {
+                        adapter.setGpa(res.getGpa());
+                        isSetGpa = true;
+                    }
+
+                    adapter.setSelectedTab(tab);
+                    // adapter.setSubjects(res.getData()); // update list môn học
                 } else {
-                    // Log toàn bộ JSON trả về từ server
                     try {
-                        String errorJson = response.errorBody() != null ? response.errorBody().string() : "null";
+                        String errorJson = response.errorBody() != null
+                                ? response.errorBody().string() : "null";
                         Log.d("ERROR BODY", errorJson);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
             }
 
             @Override
             public void onFailure(Call<GradeResponse> call, Throwable t) {
-
-                Toast.makeText(HomeActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-
-                Log.d("GET STUDENT GRADES", Objects.requireNonNull(t.getMessage()));
+                Toast.makeText(AcademicResultActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

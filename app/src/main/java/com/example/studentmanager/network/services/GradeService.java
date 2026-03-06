@@ -1,10 +1,11 @@
 package com.example.studentmanager.network.services;
 
+import androidx.annotation.Nullable;
+
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GradeService {
@@ -13,6 +14,7 @@ public interface GradeService {
 
     Call<GradeResponse> getGrades(
             @Query("page") int page,
-            @Query("per_page") int perPage
+            @Query("per_page") int perPage,
+            @Query("semester") @Nullable Integer semester
     );
 }

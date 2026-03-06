@@ -18,6 +18,7 @@ import com.example.studentmanager.utils.EmailValidator;
 import com.example.studentmanager.utils.HandleApiError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import java.util.Objects;
 
@@ -94,13 +95,16 @@ public class LoginActivity extends BaseActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
+                            String json = new Gson().toJson(response.body());
+                            Log.d("LOGIN_RESPONSE", json);
+
                             String accessToken = response.body() != null ? response.body().getMeta().getAccess_token() : null;
 
                             SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
                             prefs.edit().putString("access_token", accessToken).apply();
 
-                            navigateTo(HomeActivity.class);
+                            navigateTo(AcademicResultActivity.class);
                         } else {
                             String errorMessage = HandleApiError.parse(response);
 
