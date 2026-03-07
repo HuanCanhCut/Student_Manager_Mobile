@@ -13,6 +13,7 @@ import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.network.ApiClient;
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
 import com.example.studentmanager.network.services.GradeService;
+import com.example.studentmanager.utils.BottomNavigation;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -39,6 +40,8 @@ public class AcademicResultActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_academic_results);
+
+        BottomNavigation.setup(this, 1);
 
         recyclerView = findViewById(R.id.recyclerView);
 

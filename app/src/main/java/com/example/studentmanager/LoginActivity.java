@@ -49,9 +49,9 @@ public class LoginActivity extends BaseActivity {
         SharedPreferences prefs = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
         String token = prefs.getString("access_token", "");
 
-        if (!token.isEmpty()) {
-            navigateTo(AcademicResultActivity.class);
-        }
+//        if (!token.isEmpty()) {
+//            navigateTo(AcademicResultActivity.class);
+//        }
 
         initView();
         eventsHandler();
