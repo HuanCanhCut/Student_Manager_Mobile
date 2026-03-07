@@ -27,6 +27,7 @@ public class AcademicResultActivity extends BaseActivity {
     private HomeAdapter adapter;
 
     boolean isSetGpa = false; // flag check only set gpa on first time
+    Integer semester = 1;
 
     @Override
     protected boolean enableImeInset() {
@@ -52,6 +53,18 @@ public class AcademicResultActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int index = tab.getPosition();
+
+                switch (index) {
+                    case 0:
+                        semester = 1;
+                        break;
+                    case 1:
+                        semester = 2;
+                        break;
+                    default:
+                        semester = null;
+                }
+
                 fetchSubjects(tab.getPosition());
             }
 
@@ -76,7 +89,7 @@ public class AcademicResultActivity extends BaseActivity {
     private void fetchSubjects(int tab) {
         GradeService apiService = ApiClient.getInstance(this).create(GradeService.class);
 
-        apiService.getGrades(1, 10, null).enqueue(new Callback<GradeResponse>() {
+        apiService.getGrades(1, 10, this.semester).enqueue(new Callback<GradeResponse>() {
             @Override
             public void onResponse(Call<GradeResponse> call, Response<GradeResponse> response) {
                 if (response.isSuccessful()) {
@@ -90,7 +103,7 @@ public class AcademicResultActivity extends BaseActivity {
                     }
 
                     adapter.setSelectedTab(tab);
-                    // adapter.setSubjects(res.getData()); // update list môn học
+                    adapter.setGradeResponse(res); // update list môn học
                 } else {
                     try {
                         String errorJson = response.errorBody() != null

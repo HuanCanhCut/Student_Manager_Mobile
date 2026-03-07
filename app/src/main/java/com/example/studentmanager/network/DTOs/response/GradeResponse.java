@@ -1,16 +1,17 @@
 package com.example.studentmanager.network.DTOs.response;
 
 import com.example.studentmanager.DTOs.GradeModel;
+import com.example.studentmanager.DTOs.GradeWithSubject;
 import com.example.studentmanager.DTOs.SubjectModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GradeResponse {
-    private final List<Data> data = new ArrayList<>();
+    private final List<GradeWithSubject> data = new ArrayList<>();
     private final Meta meta = new Meta();
 
-    public List<Data> getData () {
+    public List<GradeWithSubject> getData () {
         return this.data;
     }
 
@@ -20,10 +21,6 @@ public class GradeResponse {
 
     public float getGpa () {
         return this.meta.gpa;
-    }
-
-    public static class Data extends GradeModel {
-        private SubjectModel subject;
     }
 
     public static class Meta {

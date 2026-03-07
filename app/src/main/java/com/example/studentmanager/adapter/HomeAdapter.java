@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentmanager.DTOs.GradeModel;
+import com.example.studentmanager.DTOs.GradeWithSubject;
 import com.example.studentmanager.R;
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private GradeResponse gradeResponse = new GradeResponse();
+    private GradeResponse gradeResponse;
     private float gpa;
 
     private static final int TYPE_GPA_CARD = 0;
@@ -40,6 +42,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new GpaCardViewHolder(inflater.inflate(R.layout.item_gpa_card, parent, false));
             case TYPE_TAB_BAR:
                 return new TabbarViewHolder(inflater.inflate(R.layout.item_academic_result_tab, parent, false));
+            case TYPE_SUBJECT:
+                return new SubjectViewHolder(inflater.inflate(R.layout.item_subject_card, parent, false));
             default:
                 return new GpaCardViewHolder(inflater.inflate(R.layout.item_gpa_card, parent, false));
         }
@@ -51,11 +55,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((GpaCardViewHolder) holder).bind(this.gpa);
         } else if (holder instanceof TabbarViewHolder) {
             ((TabbarViewHolder) holder).bind(this.selectedTab, this.listener);
+        } else if (holder instanceof SubjectViewHolder) {
+            GradeWithSubject grade = this.gradeResponse.getData().get(position - 2);
+
+            ((SubjectViewHolder) holder).bind(grade);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
+        Log.d("HomeAdapter", "getItemViewType pos=" + position);
+
         if (position == 0) return TYPE_GPA_CARD;
         if (position == 1) return TYPE_TAB_BAR;
         return TYPE_SUBJECT;
@@ -63,7 +73,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 2 + gradeResponse.getData().size();
+        int count = (gradeResponse == null || gradeResponse.getData() == null)
+                ? 2
+                : 2 + gradeResponse.getData().size();
+        return count;
     }
 
     public void setGpa(float gpa) {
@@ -74,6 +87,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setSelectedTab(int tab) {
         this.selectedTab = tab;
         notifyItemChanged(1); // position 1 là TabBar
+    }
+
+    public void setGradeResponse(GradeResponse gradeResponse) {
+        this.gradeResponse = gradeResponse;
+
+        notifyDataSetChanged();
     }
 
     static class GpaCardViewHolder extends RecyclerView.ViewHolder {
@@ -116,6 +135,82 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             tabLayout.addOnTabSelectedListener(listener);
+        }
+    }
+
+    static class SubjectViewHolder extends RecyclerView.ViewHolder {
+
+        TextView name, code, credit, letterGrade, componentGrade, gradeText, gradeResult;
+
+        public SubjectViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            name = itemView.findViewById(R.id.name);
+            code = itemView.findViewById(R.id.code);
+            credit = itemView.findViewById(R.id.credit);
+            letterGrade = itemView.findViewById(R.id.letterGrade);
+            componentGrade = itemView.findViewById(R.id.componentGrade);
+            gradeText = itemView.findViewById(R.id.grade);
+            gradeResult = itemView.findViewById(R.id.gradeResult);
+        }
+
+        private String getLetterGrade(double score) {
+            if (score >= 8.5) {
+                return "A";
+            } else if (score >= 8.0) {
+                return "B+";
+            } else if (score >= 7.0) {
+                return "B";
+            } else if (score >= 6.5) {
+                return "C+";
+            } else if (score >= 5.5) {
+                return "C";
+            } else if (score >= 5.0) {
+                return "D+";
+            } else if (score >= 4.0) {
+                return "D";
+            } else {
+                return "F";
+            }
+        }
+
+        void bind(GradeWithSubject grade) {
+            Float component = grade.getComponent_grade();
+            Float exam = grade.getGrade();
+
+            float totalResult = 0;
+
+            if (component != null && exam != null) {
+                totalResult = component * 0.25f + exam * 0.5f;
+            }
+
+            name.setText(grade.getSubject().getName());
+//            code.setText(grade.getSubject().getCode());
+            credit.setText(String.format("• %s tín chỉ", grade.getSubject().getCredit()));
+
+            if (totalResult == 0) {
+                letterGrade.setText("-");
+            } else {
+                letterGrade.setText(getLetterGrade(totalResult));
+            }
+
+            if (grade.getComponent_grade() == null) {
+                componentGrade.setText(String.format("%s", "Chờ điểm"));
+            } else {
+                componentGrade.setText(String.format("%s/10", grade.getComponent_grade()));
+            }
+
+            if (grade.getGrade() == null) {
+                gradeText.setText(String.format("%s/10", "Chờ điểm"));
+            } else {
+                gradeText.setText(String.valueOf(grade.getGrade()));
+            }
+
+            if (totalResult == 0) {
+                gradeResult.setText(String.valueOf("--"));
+            } else {
+                gradeResult.setText(String.valueOf(totalResult));
+            }
         }
     }
 }

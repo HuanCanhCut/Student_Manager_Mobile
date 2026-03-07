@@ -1,5 +1,6 @@
 package com.example.studentmanager;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,13 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences prefs = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String token = prefs.getString("access_token", "");
+
+        if (!token.isEmpty()) {
+            navigateTo(AcademicResultActivity.class);
+        }
 
         initView();
         eventsHandler();
