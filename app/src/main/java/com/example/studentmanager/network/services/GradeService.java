@@ -13,8 +13,6 @@ public interface GradeService {
     @GET("students/grades")
 
     Call<GradeResponse> getGrades(
-            @Query("page") int page,
-            @Query("per_page") int perPage,
             @Query("semester") @Nullable Integer semester
     );
 }

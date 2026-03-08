@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="12dp">
     <TextView
+        android:id="@+id/tabTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Học kỳ I 2026"

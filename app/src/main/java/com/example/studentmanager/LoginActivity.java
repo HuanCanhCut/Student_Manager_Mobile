@@ -17,6 +17,7 @@ import com.example.studentmanager.network.DTOs.response.LoginResponse;
 import com.example.studentmanager.network.services.AuthService;
 import com.example.studentmanager.utils.EmailValidator;
 import com.example.studentmanager.utils.HandleApiError;
+import com.example.studentmanager.utils.SessionManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -45,13 +46,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-
-        SharedPreferences prefs = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        String token = prefs.getString("access_token", "");
-
-//        if (!token.isEmpty()) {
-//            navigateTo(AcademicResultActivity.class);
-//        }
 
         initView();
         eventsHandler();
@@ -104,13 +98,15 @@ public class LoginActivity extends BaseActivity {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
                             String json = new Gson().toJson(response.body());
-                            Log.d("LOGIN_RESPONSE", json);
-
                             String accessToken = response.body() != null ? response.body().getMeta().getAccess_token() : null;
 
-                            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                            SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
 
                             prefs.edit().putString("access_token", accessToken).apply();
+
+                            SessionManager.getInstance().setAccessToken(accessToken);
+                            assert response.body() != null;
+                            SessionManager.getInstance().setCurrentUser(response.body().getData());
 
                             navigateTo(AcademicResultActivity.class);
                         } else {

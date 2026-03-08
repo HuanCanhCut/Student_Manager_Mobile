@@ -12,8 +12,11 @@ public class GradeModel extends BaseModel {
     private Float grade;
 
     @Nullable
-    private Float component_grade;
-    private int semester;
+    private Float first_component_grade;
+
+    @Nullable
+    private Float second_component_grade;
+
 
     public int getStudent_id() {
         return student_id;
@@ -27,11 +30,13 @@ public class GradeModel extends BaseModel {
         return grade;
     }
 
-    public Float getComponent_grade() {
-        return component_grade;
+    @Nullable
+    public Float getFirst_component_grade() {
+        return first_component_grade;
     }
 
-    public int getSemester() {
-        return semester;
+    @Nullable
+    public Float getSecond_component_grade() {
+        return second_component_grade;
     }
 }

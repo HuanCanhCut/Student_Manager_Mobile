@@ -1,42 +1,15 @@
 package com.example.studentmanager.network.DTOs.response;
 
+import com.example.studentmanager.DTOs.UserModel;
+
 import java.util.Date;
 
 public class LoginResponse {
-    private Data data;
+    private UserModel data;
     private Meta meta;
 
-    public Data getData() { return data; }
+    public UserModel getData() { return data; }
     public Meta getMeta() { return meta; }
-
-    enum Role {
-        student,
-        teacher,
-        admin
-    }
-
-    enum Gender {
-        male,
-        female,
-        other
-    }
-
-    public static class Data {
-        private int id;
-        private String first_name;
-        private String last_name;
-        private String full_name;
-        private String avatar;
-        private Role role;
-        private Date birthday;
-        private Gender gender;
-        private String phone;
-        private String address;
-        private String code;
-        private int class_id;
-        private Date created_at;
-        private Date updated_at;
-    }
 
     public static class Meta {
         private String access_token;

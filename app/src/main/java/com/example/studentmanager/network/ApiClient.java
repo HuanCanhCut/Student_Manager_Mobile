@@ -17,8 +17,7 @@ public class ApiClient {
         if (instance == null) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(chain -> {
-                        // Lấy token từ SharedPreferences mỗi lần gửi request
-                        SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                        SharedPreferences prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
                         String token = prefs.getString("access_token", "");
 
                         Request request = chain.request().newBuilder()

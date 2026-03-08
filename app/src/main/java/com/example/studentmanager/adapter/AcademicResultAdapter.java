@@ -9,13 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.studentmanager.DTOs.GradeModel;
 import com.example.studentmanager.DTOs.GradeWithSubject;
 import com.example.studentmanager.R;
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
 import com.google.android.material.tabs.TabLayout;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private GradeResponse gradeResponse;
     private float gpa;
 
@@ -27,9 +26,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private TabLayout.OnTabSelectedListener listener;
 
-    public HomeAdapter(float gpa, TabLayout.OnTabSelectedListener listener) {
+    private Integer currentSemester;
+
+    public AcademicResultAdapter(float gpa, TabLayout.OnTabSelectedListener listener, Integer semester) {
         this.gpa = gpa;
         this.listener = listener;
+        this.currentSemester = semester;
     }
 
     @NonNull
@@ -54,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof GpaCardViewHolder) {
             ((GpaCardViewHolder) holder).bind(this.gpa);
         } else if (holder instanceof TabbarViewHolder) {
-            ((TabbarViewHolder) holder).bind(this.selectedTab, this.listener);
+            ((TabbarViewHolder) holder).bind(this.selectedTab, this.listener, this.currentSemester);
         } else if (holder instanceof SubjectViewHolder) {
             GradeWithSubject grade = this.gradeResponse.getData().get(position - 2);
 
@@ -95,6 +97,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setCurrentSemester(Integer currentSemester) {
+        this.currentSemester = currentSemester;
+
+        notifyItemChanged(1);
+    }
+
     static class GpaCardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewGpa;
 
@@ -112,18 +120,26 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static class TabbarViewHolder extends RecyclerView.ViewHolder {
 
         TabLayout tabLayout;
+        TextView tabTitle;
 
         public TabbarViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tabLayout = itemView.findViewById(R.id.tabLayout);
+            tabTitle = itemView.findViewById(R.id.tabTitle);
         }
 
-        void bind(int selectedTab, TabLayout.OnTabSelectedListener listener) {
+        void bind(int selectedTab, TabLayout.OnTabSelectedListener listener, Integer semester) {
+            if (semester != null) {
+                tabTitle.setText("Học kì " + semester);
+            } else {
+                tabTitle.setText("Tất cả học kỳ");
+            }
+
             if (tabLayout.getTabCount() == 0) {
-                tabLayout.addTab(tabLayout.newTab().setText("Học kì I"));
-                tabLayout.addTab(tabLayout.newTab().setText("Học kì II"));
-                tabLayout.addTab(tabLayout.newTab().setText("Tất cả học kì"));
+                tabLayout.addTab(tabLayout.newTab().setText("Hiện tại"));
+                tabLayout.addTab(tabLayout.newTab().setText("Trước đó"));
+                tabLayout.addTab(tabLayout.newTab().setText("Tất cả học kỳ"));
             }
 
             // Xóa listener cũ trước khi select để tránh trigger không mong muốn
@@ -175,13 +191,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void bind(GradeWithSubject grade) {
-            Float component = grade.getComponent_grade();
+            Float firstComponentGrade = grade.getFirst_component_grade();
+            Float secondComponentGrade = grade.getSecond_component_grade();
             Float exam = grade.getGrade();
 
             float totalResult = 0;
 
-            if (component != null && exam != null) {
-                totalResult = component * 0.25f + exam * 0.5f;
+            if (firstComponentGrade != null && secondComponentGrade != null && exam != null) {
+                totalResult = firstComponentGrade * 0.25f + secondComponentGrade * 0.25f + exam * 0.5f;
             }
 
             name.setText(grade.getSubject().getName());
@@ -194,10 +211,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 letterGrade.setText(getLetterGrade(totalResult));
             }
 
-            if (grade.getComponent_grade() == null) {
-                componentGrade.setText(String.format("%s", "Chờ điểm"));
+            String first = (firstComponentGrade != null) ? String.valueOf(firstComponentGrade) : "-";
+            String second = (secondComponentGrade != null) ? String.valueOf(secondComponentGrade) : "-";
+
+            if (first.equals("-") && second.equals("-")) {
+                componentGrade.setText("Chờ điểm");
             } else {
-                componentGrade.setText(String.format("%s/10", grade.getComponent_grade()));
+                componentGrade.setText(String.format("%s | %s", first, second));
             }
 
             if (grade.getGrade() == null) {
