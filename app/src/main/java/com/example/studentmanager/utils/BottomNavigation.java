@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.studentmanager.AcademicResultActivity;
 import com.example.studentmanager.HomeActivity;
+import com.example.studentmanager.ProfileActivity;
 import com.example.studentmanager.R;
 
 public class BottomNavigation {
@@ -17,9 +18,14 @@ public class BottomNavigation {
 
         LinearLayout home = activity.findViewById(R.id.homeTab);
         LinearLayout grade = activity.findViewById(R.id.gradeTab);
+        LinearLayout profile = activity.findViewById(R.id.tabProfile);
+
 
         ImageView homeIcon = activity.findViewById(R.id.homeIcon);
         TextView homeText = activity.findViewById(R.id.textHome);
+
+        ImageView profileIcon = activity.findViewById(R.id.profileIcon);
+        TextView profileText = activity.findViewById(R.id.textProfile);
 
         ImageView gradeIcon = activity.findViewById(R.id.gradeIcon);
         TextView gradeText = activity.findViewById(R.id.textGrade);
@@ -34,15 +40,23 @@ public class BottomNavigation {
         gradeIcon.setColorFilter(inactiveColor);
         gradeText.setTextColor(inactiveColor);
 
-        // highlight tab
-        if(activeTab == 0){
-            homeIcon.setColorFilter(activeColor);
-            homeText.setTextColor(activeColor);
-        }
+        profileIcon.setColorFilter(inactiveColor);
+        profileText.setTextColor(inactiveColor);
 
-        if(activeTab == 1){
-            gradeIcon.setColorFilter(activeColor);
-            gradeText.setTextColor(activeColor);
+
+        // highlight tab
+        switch (activeTab) {
+            case 0:
+                homeIcon.setColorFilter(activeColor);
+                homeText.setTextColor(activeColor);
+                break;
+            case 1:
+                gradeIcon.setColorFilter(activeColor);
+                gradeText.setTextColor(activeColor);
+                break;
+                case 4:
+                profileIcon.setColorFilter(activeColor);
+                profileText.setTextColor(activeColor);
         }
 
         // navigation
@@ -55,6 +69,12 @@ public class BottomNavigation {
         grade.setOnClickListener(v -> {
             if(!(activity instanceof AcademicResultActivity)){
                 activity.startActivity(new Intent(activity, AcademicResultActivity.class));
+            }
+        });
+
+        profile.setOnClickListener(v -> {
+            if(!(activity instanceof ProfileActivity)){
+                activity.startActivity(new Intent(activity, ProfileActivity.class));
             }
         });
     }

@@ -27,7 +27,6 @@ public class UserModel extends BaseModel{
     private String first_name;
     private String last_name;
     private String full_name;
-    private String avatar;
     private Role role;
     private Date birthday;
     private Gender gender;
@@ -49,10 +48,6 @@ public class UserModel extends BaseModel{
 
     public String getFull_name() {
         return full_name;
-    }
-
-    public String getAvatar() {
-        return avatar;
     }
 
     public Role getRole() {

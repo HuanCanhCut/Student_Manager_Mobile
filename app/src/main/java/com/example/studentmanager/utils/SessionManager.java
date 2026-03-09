@@ -1,12 +1,13 @@
 package com.example.studentmanager.utils;
 
 import com.example.studentmanager.DTOs.UserModel;
+import com.example.studentmanager.DTOs.UserModelWithOverview;
 
 public class SessionManager {
 
     private static SessionManager instance;
 
-    private UserModel currentUser;
+    private UserModelWithOverview currentUser;
     private String accessToken;
 
     private SessionManager() {}
@@ -18,11 +19,11 @@ public class SessionManager {
         return instance;
     }
 
-    public UserModel getCurrentUser() {
+    public UserModelWithOverview getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(UserModel user) {
+    public void setCurrentUser(UserModelWithOverview user) {
         currentUser = user;
     }
 

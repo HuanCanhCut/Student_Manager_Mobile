@@ -1,14 +1,15 @@
 package com.example.studentmanager.network.DTOs.response;
 
 import com.example.studentmanager.DTOs.UserModel;
+import com.example.studentmanager.DTOs.UserModelWithOverview;
 
 import java.util.Date;
 
 public class LoginResponse {
-    private UserModel data;
+    private UserModelWithOverview data;
     private Meta meta;
 
-    public UserModel getData() { return data; }
+    public UserModelWithOverview getData() { return data; }
     public Meta getMeta() { return meta; }
 
     public static class Meta {

@@ -13,11 +13,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.studentmanager.DTOs.UserModel;
+import com.example.studentmanager.DTOs.UserModelWithOverview;
 import com.example.studentmanager.network.ApiClient;
 import com.example.studentmanager.network.DTOs.response.GetCurrentUserResponse;
 import com.example.studentmanager.network.services.AuthService;
 import com.example.studentmanager.utils.HandleApiError;
 import com.example.studentmanager.utils.SessionManager;
+import com.google.gson.Gson;
 
 import java.util.Objects;
 
@@ -51,9 +53,11 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<GetCurrentUserResponse> call, Response<GetCurrentUserResponse> response) {
                     if (response.isSuccessful()) {
-                        UserModel user = response.body().getData();
+                        UserModelWithOverview user = response.body().getData();
 
                         SessionManager.getInstance().setCurrentUser(user);
+
+                        Log.d("FETCH CURRENT USSER", new Gson().toJson(user));
 
                         startActivity( new Intent(SplashActivity.this, AcademicResultActivity.class));
                     } else {

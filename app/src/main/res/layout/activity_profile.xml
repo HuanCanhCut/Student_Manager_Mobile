@@ -1,0 +1,526 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom_line"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/chervonleft" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexendbold"
+            android:gravity="center"
+            android:text="Hồ sơ sinh viên"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/logout_button"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/logout_icon" />
+    </LinearLayout>
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F1F5F9"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/avatarContainer"
+                        android:layout_width="128dp"
+                        android:layout_height="128dp"
+                        android:elevation="8dp"
+                        app:cardCornerRadius="9999dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/avatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/login_image" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnChangeAvatar"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:cardBackgroundColor="#007BFF"
+                        app:cardCornerRadius="19dp"
+                        app:cardElevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@id/avatarContainer"
+                        app:layout_constraintEnd_toEndOf="@id/avatarContainer">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/camera_icon"
+                            app:tint="#FFFFFF" />
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/lexendbold"
+                    android:text="Nguyễn Thị Haha"
+                    android:textAlignment="center"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/lexendmedium"
+                    android:text="MSSV: 01234567"
+                    android:textAlignment="center"
+                    android:textColor="#3A5DA1"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:backgroundTint="#137FEC"
+                    android:padding="16dp"
+                    android:text="Chỉnh sửa"
+                    android:textSize="18dp"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/pen_icon"
+                    app:iconGravity="textStart"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <!-- LinearLayout 1 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="GPA"
+                                android:textColor="#5A7EBF"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/gpa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="3.85"
+                                android:textColor="#212D4B"
+                                android:textSize="28sp" />
+                        </LinearLayout>
+
+                        <!-- LinearLayout 2 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="TÍN CHỈ"
+                                android:textColor="#5A7EBF"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/credit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="120"
+                                android:textColor="#212D4B"
+                                android:textSize="28sp" />
+                        </LinearLayout>
+
+                        <!-- LinearLayout 3 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="HỌC KÌ"
+                                android:textColor="#5A7EBF"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/semester"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendbold"
+                                android:text="6"
+                                android:textColor="#212D4B"
+                                android:textSize="28sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/hat_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/lexendbold"
+                        android:text="Thông tin học tập"
+                        android:textColor="#212D4B"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lexendmedium"
+                                android:text="Họ"
+                                android:textColor="#3A5DA1" />
+
+                            <TextView
+                                android:id="@+id/studentLastName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendsemibold"
+                                android:text="Nguyễn Thị"
+                                android:textColor="#212D4B" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lexendmedium"
+                                android:text="Tên"
+                                android:textColor="#3A5DA1" />
+
+                            <TextView
+                                android:id="@+id/studentName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendsemibold"
+                                android:text="Haha"
+                                android:textColor="#212D4B" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            >
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="MSSV"
+                                android:textColor="#3A5DA1"
+                                android:fontFamily="@font/lexendmedium"/>
+
+                            <TextView
+                                android:id="@+id/studentCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="01234567"
+                                android:textColor="#212D4B"
+                                android:fontFamily="@font/lexendsemibold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            >
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Lớp"
+                                android:textColor="#3A5DA1"
+                                android:fontFamily="@font/lexendmedium"/>
+
+                            <TextView
+                                android:id="@+id/className"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12523W.1"
+                                android:textColor="#212D4B"
+                                android:fontFamily="@font/lexendsemibold"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/user_icon"
+                        android:layout_marginTop="1dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/lexendbold"
+                        android:text="Thông tin cá nhân"
+                        android:textColor="#212D4B"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lexendmedium"
+                                android:text="Email"
+                                android:textColor="#3A5DA1" />
+
+                            <TextView
+                                android:id="@+id/email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendsemibold"
+                                android:text="haha@gmail.com"
+                                android:textColor="#212D4B" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lexendmedium"
+                                android:text="Ngày sinh"
+                                android:textColor="#3A5DA1" />
+
+                            <TextView
+                                android:id="@+id/birthday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lexendsemibold"
+                                android:text="04/03/2005"
+                                android:textColor="#212D4B" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            >
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Giới tính"
+                                android:textColor="#3A5DA1"
+                                android:fontFamily="@font/lexendmedium"/>
+
+                            <TextView
+                                android:id="@+id/gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nữ"
+                                android:textColor="#212D4B"
+                                android:fontFamily="@font/lexendsemibold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            >
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Số điện thoại"
+                                android:textColor="#3A5DA1"
+                                android:fontFamily="@font/lexendmedium"/>
+
+                            <TextView
+                                android:id="@+id/phoneNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0912345678"
+                                android:textColor="#212D4B"
+                                android:fontFamily="@font/lexendsemibold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            >
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Địa chỉ"
+                                android:textColor="#3A5DA1"
+                                android:fontFamily="@font/lexendmedium"/>
+
+                            <TextView
+                                android:id="@+id/address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hà Nội"
+                                android:textColor="#212D4B"
+                                android:fontFamily="@font/lexendsemibold"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/bottom_navigation" />
+</LinearLayout>
