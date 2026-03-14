@@ -1,11 +1,13 @@
 package com.example.studentmanager.DTOs;
 
 public class UserModelWithOverview extends UserModel{
-    private int gpa;
+    private Float gpa;
     private int passed_credits;
-    private int current_semester;
+    private String current_semester;
+    private String prev_semester;
+    private String next_semester;
 
-    public int getGpa() {
+    public Float getGpa() {
         return gpa;
     }
 
@@ -13,7 +15,15 @@ public class UserModelWithOverview extends UserModel{
         return passed_credits;
     }
 
-    public int getCurrent_semester() {
+    public String getCurrent_semester() {
         return current_semester;
+    }
+
+    public String getPrev_semester() {
+        return prev_semester;
+    }
+
+    public String getNext_semester() {
+        return next_semester;
     }
 }

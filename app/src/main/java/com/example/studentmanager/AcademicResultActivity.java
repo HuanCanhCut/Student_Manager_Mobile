@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmanager.DTOs.UserModel;
+import com.example.studentmanager.DTOs.UserModelWithOverview;
 import com.example.studentmanager.adapter.AcademicResultAdapter;
 import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.network.ApiClient;
@@ -35,12 +36,12 @@ public class AcademicResultActivity extends BaseActivity {
     private AcademicResultAdapter adapter;
 
     boolean isSetGpa = false; // flag check only set gpa on first time
-    Integer semester = 1;
 
     ImageView backBtn;
 
-    UserModel currentUser = SessionManager.getInstance().getCurrentUser();
+    UserModelWithOverview currentUser = SessionManager.getInstance().getCurrentUser();
 
+    String semester = this.currentUser.getCurrent_semester();
 
     @Override
     protected boolean enableImeInset() {
@@ -50,7 +51,6 @@ public class AcademicResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_academic_results);
 
         initView();
@@ -67,8 +67,6 @@ public class AcademicResultActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(false);
 
-        this.semester = handleGetCurrentSemester();
-
         TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -76,10 +74,10 @@ public class AcademicResultActivity extends BaseActivity {
 
                 switch (index) {
                     case 0: // Tab hiện tại
-                        semester = handleGetCurrentSemester();
+                        semester = AcademicResultActivity.this.currentUser.getCurrent_semester();
                         break;
                     case 1: // Tab trước đó
-                        semester = handleGetCurrentSemester() - 1;
+                            semester = AcademicResultActivity.this.currentUser.getPrev_semester();
                         break;
                     default:
                         semester = null;
@@ -155,42 +153,5 @@ public class AcademicResultActivity extends BaseActivity {
                 Toast.makeText(AcademicResultActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public int handleGetCurrentSemester() {
-        // handle calc current semester
-        // Get the current date
-        LocalDate today = LocalDate.now();
-
-        String schoolYear = this.currentUser.getYear();
-
-        if (schoolYear != null) {
-            String[] years = schoolYear.split("-");
-            int startYear = Integer.parseInt(years[0]);
-
-            int year = today.getYear();
-            int month = today.getMonthValue();
-            int day = today.getDayOfMonth();
-
-            int semesterInYear;
-
-            if ((month > 8 || (month == 8 && day >= 15)) || (month == 1 && day < 15)) {
-                semesterInYear = 1;
-            } else {
-                semesterInYear = 2;
-            }
-
-            int schoolYearIndex;
-
-            if (month >= 8) {
-                schoolYearIndex = year - startYear;
-            } else {
-                schoolYearIndex = year - startYear - 1;
-            }
-
-            return schoolYearIndex * 2 + semesterInYear;
-        }
-
-        return 0;
     }
 }

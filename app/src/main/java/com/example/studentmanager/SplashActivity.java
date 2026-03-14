@@ -57,8 +57,6 @@ public class SplashActivity extends AppCompatActivity {
 
                         SessionManager.getInstance().setCurrentUser(user);
 
-                        Log.d("FETCH CURRENT USSER", new Gson().toJson(user));
-
                         startActivity( new Intent(SplashActivity.this, AcademicResultActivity.class));
                     } else {
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));

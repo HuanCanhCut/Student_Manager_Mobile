@@ -1,5 +1,6 @@
 package com.example.studentmanager.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmanager.DTOs.GradeWithSubject;
+import com.example.studentmanager.GPAHistoryActivity;
 import com.example.studentmanager.R;
 import com.example.studentmanager.network.DTOs.response.GradeResponse;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Objects;
 
 public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private GradeResponse gradeResponse;
@@ -26,9 +32,9 @@ public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private TabLayout.OnTabSelectedListener listener;
 
-    private Integer currentSemester;
+    private String currentSemester;
 
-    public AcademicResultAdapter(float gpa, TabLayout.OnTabSelectedListener listener, Integer semester) {
+    public AcademicResultAdapter(float gpa, TabLayout.OnTabSelectedListener listener, String semester) {
         this.gpa = gpa;
         this.listener = listener;
         this.currentSemester = semester;
@@ -66,8 +72,6 @@ public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("HomeAdapter", "getItemViewType pos=" + position);
-
         if (position == 0) return TYPE_GPA_CARD;
         if (position == 1) return TYPE_TAB_BAR;
         return TYPE_SUBJECT;
@@ -97,7 +101,7 @@ public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
     }
 
-    public void setCurrentSemester(Integer currentSemester) {
+    public void setCurrentSemester(String currentSemester) {
         this.currentSemester = currentSemester;
 
         notifyItemChanged(1);
@@ -106,14 +110,27 @@ public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     static class GpaCardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewGpa;
 
+        MaterialButton gpaHistory;
+
         public GpaCardViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewGpa = itemView.findViewById(R.id.gpa);
+            gpaHistory = itemView.findViewById(R.id.gpaHistory);
         }
 
         void bind(float gpa) {
+
             textViewGpa.setText(String.format("%.2f", gpa));
+
+            gpaHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent gpaHistoryIntent = new Intent(v.getContext(), GPAHistoryActivity.class);
+
+                    v.getContext().startActivity(gpaHistoryIntent);
+                }
+            });
         }
     }
 
@@ -129,12 +146,8 @@ public class AcademicResultAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tabTitle = itemView.findViewById(R.id.tabTitle);
         }
 
-        void bind(int selectedTab, TabLayout.OnTabSelectedListener listener, Integer semester) {
-            if (semester != null) {
-                tabTitle.setText("Học kì " + semester);
-            } else {
-                tabTitle.setText("Tất cả học kỳ");
-            }
+        void bind(int selectedTab, TabLayout.OnTabSelectedListener listener, String semester) {
+            tabTitle.setText(Objects.requireNonNullElse(semester, "Tất cả học kỳ"));
 
             if (tabLayout.getTabCount() == 0) {
                 tabLayout.addTab(tabLayout.newTab().setText("Hiện tại"));
