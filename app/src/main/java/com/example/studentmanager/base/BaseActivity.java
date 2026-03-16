@@ -49,8 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void applyImeInset(View root) {
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
-            Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
-            v.setPadding(0, 0, 0, ime.bottom);
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
