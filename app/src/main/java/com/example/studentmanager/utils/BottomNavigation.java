@@ -8,17 +8,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.studentmanager.AcademicResultActivity;
+import com.example.studentmanager.FeeActivity;
 import com.example.studentmanager.HomeActivity;
 import com.example.studentmanager.ProfileActivity;
 import com.example.studentmanager.R;
 
 public class BottomNavigation {
 
-    public static void setup(Activity activity, int activeTab){
+    public static void setup(Activity activity, int activeTab) {
 
         LinearLayout home = activity.findViewById(R.id.homeTab);
         LinearLayout grade = activity.findViewById(R.id.gradeTab);
         LinearLayout profile = activity.findViewById(R.id.tabProfile);
+
+        LinearLayout tuitionFee = activity.findViewById(R.id.tuitionFeeTab);
+        LinearLayout calendar = activity.findViewById(R.id.calendarTab);
 
 
         ImageView homeIcon = activity.findViewById(R.id.homeIcon);
@@ -29,6 +33,10 @@ public class BottomNavigation {
 
         ImageView gradeIcon = activity.findViewById(R.id.gradeIcon);
         TextView gradeText = activity.findViewById(R.id.textGrade);
+
+        ImageView tuitionFeeIcon = activity.findViewById(R.id.tuitionFeeIcon);
+        TextView tuitionFeeText = activity.findViewById(R.id.textTuitionFee);
+
 
         int activeColor = Color.parseColor("#2563EB");
         int inactiveColor = Color.parseColor("#94A3B8");
@@ -43,6 +51,9 @@ public class BottomNavigation {
         profileIcon.setColorFilter(inactiveColor);
         profileText.setTextColor(inactiveColor);
 
+        tuitionFeeIcon.setColorFilter(inactiveColor);
+        tuitionFeeText.setTextColor(inactiveColor);
+
 
         // highlight tab
         switch (activeTab) {
@@ -54,28 +65,41 @@ public class BottomNavigation {
                 gradeIcon.setColorFilter(activeColor);
                 gradeText.setTextColor(activeColor);
                 break;
-                case 4:
+            case 3:
+                tuitionFeeIcon.setColorFilter(activeColor);
+                tuitionFeeText.setTextColor(activeColor);
+                break;
+            case 4:
                 profileIcon.setColorFilter(activeColor);
                 profileText.setTextColor(activeColor);
+                break;
         }
 
         // navigation
         home.setOnClickListener(v -> {
-            if(!(activity instanceof HomeActivity)){
+            if (!(activity instanceof HomeActivity)) {
                 activity.startActivity(new Intent(activity, HomeActivity.class));
             }
         });
 
         grade.setOnClickListener(v -> {
-            if(!(activity instanceof AcademicResultActivity)){
+            if (!(activity instanceof AcademicResultActivity)) {
                 activity.startActivity(new Intent(activity, AcademicResultActivity.class));
             }
         });
 
         profile.setOnClickListener(v -> {
-            if(!(activity instanceof ProfileActivity)){
+            if (!(activity instanceof ProfileActivity)) {
                 activity.startActivity(new Intent(activity, ProfileActivity.class));
             }
         });
+
+        tuitionFee.setOnClickListener(v -> {
+            if (!(activity instanceof FeeActivity)) {
+                activity.startActivity(new Intent(activity, FeeActivity.class));
+            }
+        });
+
+
     }
 }
