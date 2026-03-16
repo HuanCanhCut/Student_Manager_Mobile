@@ -17,6 +17,10 @@ import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.utils.BottomNavigation;
 import com.example.studentmanager.utils.SessionManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ProfileActivity extends BaseActivity {
     UserModelWithOverview currentUser = SessionManager.getInstance().getCurrentUser();
 
@@ -73,10 +77,17 @@ public class ProfileActivity extends BaseActivity {
         studentCode.setText(this.currentUser.getCode());
 //        className.setText(this.currentUser.getClass_name());
 //        email.setText(this.currentUser.getEmail());
-        birthday.setText((CharSequence) this.currentUser.getBirthday());
-//        phoneNumber.setText(this.currentUser.getPhone_number());
+        Date birth = this.currentUser.getBirthday();
+
+        if (birth != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            birthday.setText(sdf.format(birth));
+        } else {
+            birthday.setText("");
+        }
+        //phoneNumber.setText(this.currentUser.getPhone_number());
         address.setText(this.currentUser.getAddress());
-//        gender.setText(this.currentUser.getGender().ordinal());
+        gender.setText(String.valueOf(this.currentUser.getGender()));
 
 
     }
