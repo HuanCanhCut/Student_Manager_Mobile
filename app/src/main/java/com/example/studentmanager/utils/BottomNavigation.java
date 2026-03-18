@@ -12,6 +12,7 @@ import com.example.studentmanager.FeeActivity;
 import com.example.studentmanager.HomeActivity;
 import com.example.studentmanager.ProfileActivity;
 import com.example.studentmanager.R;
+import com.example.studentmanager.WeekActivity;
 
 public class BottomNavigation {
 
@@ -20,7 +21,6 @@ public class BottomNavigation {
         LinearLayout home = activity.findViewById(R.id.homeTab);
         LinearLayout grade = activity.findViewById(R.id.gradeTab);
         LinearLayout profile = activity.findViewById(R.id.tabProfile);
-
         LinearLayout tuitionFee = activity.findViewById(R.id.tuitionFeeTab);
         LinearLayout calendar = activity.findViewById(R.id.calendarTab);
 
@@ -37,6 +37,8 @@ public class BottomNavigation {
         ImageView tuitionFeeIcon = activity.findViewById(R.id.tuitionFeeIcon);
         TextView tuitionFeeText = activity.findViewById(R.id.textTuitionFee);
 
+        ImageView calendarIcon = activity.findViewById(R.id.calendarIcon);
+        TextView calendarText = activity.findViewById(R.id.textCalendar);
 
         int activeColor = Color.parseColor("#2563EB");
         int inactiveColor = Color.parseColor("#94A3B8");
@@ -54,6 +56,8 @@ public class BottomNavigation {
         tuitionFeeIcon.setColorFilter(inactiveColor);
         tuitionFeeText.setTextColor(inactiveColor);
 
+        calendarIcon.setColorFilter(inactiveColor);
+        calendarText.setTextColor(inactiveColor);
 
         // highlight tab
         switch (activeTab) {
@@ -64,6 +68,10 @@ public class BottomNavigation {
             case 1:
                 gradeIcon.setColorFilter(activeColor);
                 gradeText.setTextColor(activeColor);
+                break;
+            case 2:
+                calendarIcon.setColorFilter(activeColor);
+                calendarText.setTextColor(activeColor);
                 break;
             case 3:
                 tuitionFeeIcon.setColorFilter(activeColor);
@@ -100,6 +108,10 @@ public class BottomNavigation {
             }
         });
 
-
+        calendar.setOnClickListener(v -> {
+            if (!(activity instanceof WeekActivity)) {
+                activity.startActivity(new Intent(activity, WeekActivity.class));
+            }
+        });
     }
 }
