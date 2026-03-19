@@ -3,7 +3,6 @@ package com.example.studentmanager.adapter;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,7 @@ public class WeekAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Intent scheduleIntent = new Intent(v.getContext(), ScheduleActivity.class);
 
-                    scheduleIntent.putExtra("week", (Parcelable) week);
+                    scheduleIntent.putExtra("week", week);
 
                     v.getContext().startActivity(scheduleIntent);
                 }

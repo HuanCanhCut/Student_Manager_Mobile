@@ -1,18 +1,19 @@
 package com.example.studentmanager.network.DTOs.response;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GetWeeksResponse {
+public class GetWeeksResponse implements Serializable {
     private List<Week> data = new ArrayList<>();
 
     public List<Week> getData() {
         return data;
     }
 
-    public static class Week {
+    public static class Week implements Serializable {
         private int week_number;
         private Date week_start;
         private Date week_end;

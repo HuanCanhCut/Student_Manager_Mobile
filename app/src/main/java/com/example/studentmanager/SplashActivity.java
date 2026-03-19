@@ -68,6 +68,8 @@ public class SplashActivity extends AppCompatActivity {
                     Toast.makeText(SplashActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                     Log.d("LOGIN", Objects.requireNonNull(t.getMessage()));
+
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 }
             });
         }

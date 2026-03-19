@@ -2,6 +2,8 @@ package com.example.studentmanager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +34,8 @@ public class WeekActivity extends BaseActivity {
     RecyclerView recyclerView;
     private WeekAdapter adapter;
 
+    ImageView backBtn;
+
     @Override
     protected boolean enableImeInset() {
         return true;
@@ -46,6 +50,7 @@ public class WeekActivity extends BaseActivity {
         BottomNavigation.setup(WeekActivity.this, 2);
 
         recyclerView = findViewById(R.id.recyclerView);
+        backBtn = findViewById(R.id.backBtn);
 
         // Dùng LinearLayoutManager, tắt scroll riêng của RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -71,6 +76,13 @@ public class WeekActivity extends BaseActivity {
             public void onFailure(Call<GetWeeksResponse> call, Throwable t) {
                 Log.d("GET HISTORY", t.getMessage());
                 Toast.makeText(WeekActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
