@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="12dp"
+    android:gravity="center_vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        app:cardBackgroundColor="#33137FEC"
+        app:cardCornerRadius="8dp"
+        app:strokeWidth="0dp">
+
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/grade_icon"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="12dp"
+        android:paddingRight="8dp"
+        >
+
+        <TextView
+            android:id="@+id/tvFeeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexendsemibold"
+            android:text="Học phí tín chỉ"
+            android:textSize="18dp"
+            android:textColor="#000"/>
+
+
+        <TextView
+            android:id="@+id/tvFeeStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="• Đã đóng"
+            android:textColor="#16A34A"
+            android:fontFamily="@font/lexendmedium"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/tvFeeSemester"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HK II 2025-2026"
+            android:fontFamily="@font/lexendregular"
+            android:textColor="#6d6d6d"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvFeeAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lexendbold"
+        android:textColor="#0f172a"
+        android:text="25.000.000đ"
+        android:textSize="16dp"
+        android:paddingEnd="8dp"/>
+</LinearLayout>

@@ -10,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentmanager.adapter.FeeAdapter;
 import com.example.studentmanager.base.BaseActivity;
 import com.example.studentmanager.network.ApiClient;
+import com.example.studentmanager.network.DTOs.response.GetFeeResponse;
 import com.example.studentmanager.network.DTOs.response.GetWeeksResponse;
 import com.example.studentmanager.network.DTOs.response.TotalDeptResponse;
 import com.example.studentmanager.network.services.FeeService;
@@ -33,6 +37,9 @@ public class FeeActivity extends BaseActivity {
     TextView paymentTerm;
     TextView totalDept;
 
+    RecyclerView recyclerView;
+
+    private FeeAdapter adapter;
 
     @Override
     protected boolean enableImeInset() {
@@ -48,6 +55,17 @@ public class FeeActivity extends BaseActivity {
         BottomNavigation.setup(this, 3);
         totalDept = findViewById(R.id.total_dept);
         paymentTerm = findViewById(R.id.payment_term);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        // Dùng LinearLayoutManager, tắt scroll riêng của RecyclerView
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setInitialPrefetchItemCount(10);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(false);
+
+
+        adapter = new FeeAdapter();
+        recyclerView.setAdapter(adapter);
 
         SemesterService apiService = ApiClient.getInstance(this).create(SemesterService.class);
         apiService.getWeeks().enqueue(new Callback<GetWeeksResponse>() {
@@ -103,6 +121,23 @@ public class FeeActivity extends BaseActivity {
                 Toast.makeText(FeeActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
+        apiFeeService.getFee().enqueue(new Callback<GetFeeResponse>() {
+            @Override
+            public void onResponse(Call<GetFeeResponse> call, Response<GetFeeResponse> response) {
+                if (response.isSuccessful()) {
+                    adapter.setFeeResponse(response.body());
+                } else {
+                    Toast.makeText(FeeActivity.this, "Lỗi khi lấy dữ liệu", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetFeeResponse> call, Throwable t) {
+                Log.d("GET HISTORY", t.getMessage());
+                Toast.makeText(FeeActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
