@@ -75,8 +75,8 @@ public class ProfileActivity extends BaseActivity {
         studentLastName.setText(this.currentUser.getLast_name());
         studentName.setText(this.currentUser.getFirst_name());
         studentCode.setText(this.currentUser.getCode());
-//        className.setText(this.currentUser.getClass_name());
-//        email.setText(this.currentUser.getEmail());
+        className.setText(this.currentUser.getClassModel().getName());
+        email.setText(this.currentUser.getEmail());
         Date birth = this.currentUser.getBirthday();
 
         if (birth != null) {
@@ -85,10 +85,13 @@ public class ProfileActivity extends BaseActivity {
         } else {
             birthday.setText("");
         }
-        //phoneNumber.setText(this.currentUser.getPhone_number());
+        phoneNumber.setText(this.currentUser.getPhone());
         address.setText(this.currentUser.getAddress());
-        gender.setText(String.valueOf(this.currentUser.getGender()));
 
-
+        if (String.valueOf(this.currentUser.getGender()).equals("male")) {
+            gender.setText("Nam");
+        } else {
+            gender.setText("Nữ");
+        }
     }
 }

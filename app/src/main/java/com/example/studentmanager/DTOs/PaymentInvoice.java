@@ -14,7 +14,7 @@ public class PaymentInvoice extends BaseModel{
         return status;
     }
 
-    enum Status {
+    public enum Status {
         paid, unpaid;
     }
 

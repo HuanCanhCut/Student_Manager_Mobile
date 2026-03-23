@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentmanager.DTOs.PaymentInvoice;
+import com.example.studentmanager.DTOs.UserModelWithOverview;
 import com.example.studentmanager.R;
 import com.example.studentmanager.network.DTOs.response.GetFeeResponse;
+import com.example.studentmanager.utils.SessionManager;
 import com.google.gson.Gson;
 
 import java.text.NumberFormat;
@@ -58,9 +61,27 @@ public class FeeAdapter extends RecyclerView.Adapter<FeeAdapter.FeeViewHolder> {
         void bind(GetFeeResponse.Data data) {
             tvTitle.setText("Học phí tín chỉ");
             
-            if (data.getPayment_invoices() != null && !data.getPayment_invoices().isEmpty()) {
+//            if (data.getPayment_invoices() != null && !data.getPayment_invoices().isEmpty()) {
+//                tvStatus.setText("• Đã đóng");
+//                tvStatus.setTextColor(Color.parseColor("#16A34A"));
+//            } else {
+//                tvStatus.setText("• Chưa đóng");
+//                tvStatus.setTextColor(Color.RED);
+//            }
+
+            boolean isPaid = false;
+
+            UserModelWithOverview currentUser = SessionManager.getInstance().getCurrentUser();
+
+            for (int i =0; i < data.getPayment_invoices().size(); i++) {
+                if (data.getPayment_invoices().get(i).getStudent_id() == currentUser.getId()) {
+                    isPaid = data.getPayment_invoices().get(i).getStatus() == PaymentInvoice.Status.paid;
+                }
+            }
+
+            if (isPaid) {
                 tvStatus.setText("• Đã đóng");
-                tvStatus.setTextColor(Color.parseColor("#16A34A"));
+                tvStatus.setTextColor(Color.GREEN);
             } else {
                 tvStatus.setText("• Chưa đóng");
                 tvStatus.setTextColor(Color.RED);
