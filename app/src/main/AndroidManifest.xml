@@ -15,6 +15,12 @@
         android:theme="@style/Theme.StudentManager"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WeekActivity"
+            android:exported="false" />
+        <activity
             android:name=".FeeActivity"
             android:exported="false" />
         <activity
