@@ -2,6 +2,8 @@ package com.example.studentmanager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +33,7 @@ import retrofit2.Response;
 public class ScheduleActivity extends BaseActivity {
 
     RecyclerView scheduleRecyclerView, dayRecyclerView;
+    ImageView backBtn;
 
     ScheduleAdapter scheduleAdapter;
     DayAdapter dayAdapter;
@@ -72,6 +75,15 @@ public class ScheduleActivity extends BaseActivity {
         dayLayoutManager.setInitialPrefetchItemCount(10);
         dayRecyclerView.setLayoutManager(dayLayoutManager);
         dayRecyclerView.setHasFixedSize(false);
+
+        backBtn = findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         dayAdapter = new DayAdapter();
         dayRecyclerView.setAdapter(dayAdapter);
