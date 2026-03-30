@@ -1,5 +1,8 @@
 package com.example.studentmanager.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.studentmanager.DTOs.UserModel;
 import com.example.studentmanager.DTOs.UserModelWithOverview;
 
@@ -38,5 +41,10 @@ public class SessionManager {
     public void clearSession() {
         currentUser = null;
         accessToken = null;
+    }
+
+    public void remove_token (Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
+        prefs.edit().remove("access_token").apply();
     }
 }

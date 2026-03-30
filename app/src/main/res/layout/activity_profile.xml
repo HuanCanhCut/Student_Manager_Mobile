@@ -23,15 +23,15 @@
             android:src="@drawable/chervonleft" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/lexendbold"
-            android:gravity="center"
-            android:text="Hồ sơ sinh viên"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/lexendbold"
+        android:gravity="center"
+        android:text="Hồ sơ sinh viên"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/logout_button"
@@ -83,26 +83,6 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/login_image" />
                     </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btnChangeAvatar"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="#007BFF"
-                        app:cardCornerRadius="19dp"
-                        app:cardElevation="10dp"
-                        app:layout_constraintBottom_toBottomOf="@id/avatarContainer"
-                        app:layout_constraintEnd_toEndOf="@id/avatarContainer">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/camera_icon"
-                            app:tint="#FFFFFF" />
-                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -127,6 +107,7 @@
                     android:textSize="16dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editProfileBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"

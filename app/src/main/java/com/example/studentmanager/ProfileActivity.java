@@ -1,10 +1,14 @@
 package com.example.studentmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,8 +28,10 @@ import java.util.Locale;
 public class ProfileActivity extends BaseActivity {
     UserModelWithOverview currentUser = SessionManager.getInstance().getCurrentUser();
 
-    ImageView avatar;
+    ImageView avatar, logout_button;
     TextView name, code;
+
+    Button editProfileBtn;
 
     TextView gpa, credit, semester, birthday, phoneNumber, address, email, gender, studentLastName, studentName, className, studentCode;
 
@@ -45,6 +51,8 @@ public class ProfileActivity extends BaseActivity {
         avatar = findViewById(R.id.avatar);
         name = findViewById(R.id.name);
         code = findViewById(R.id.code);
+        logout_button = findViewById(R.id.logout_button);
+
 
         gpa = findViewById(R.id.gpa);
         credit = findViewById(R.id.credit);
@@ -59,6 +67,7 @@ public class ProfileActivity extends BaseActivity {
         studentName = findViewById(R.id.studentName);
         className = findViewById(R.id.className);
         studentCode = findViewById(R.id.studentCode);
+        editProfileBtn = findViewById(R.id.editProfileBtn);
 
         Glide.with(this)
                 .load("https://www.robins.vn/wp-content/uploads/2026/01/hinh-anh-con-meo-cute-1.jpg.jpg")
@@ -93,5 +102,34 @@ public class ProfileActivity extends BaseActivity {
         } else {
             gender.setText("Nữ");
         }
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateTo(EditProfile.class);
+            }
+        });
+
+        logout_button.setOnClickListener(v -> {
+            new AlertDialog.Builder(ProfileActivity.this)
+                    .setTitle("Đăng xuất")
+                    .setMessage("Bạn có chắc muốn đăng xuất không?")
+                    .setPositiveButton("Có", (dialog, which) -> {
+
+                        // remove token fron pref
+                        SessionManager.getInstance().clearSession();
+                        SessionManager.getInstance().remove_token(ProfileActivity.this);
+
+
+                        Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    })
+                    .setNegativeButton("Không", (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .show();
+        });
     }
 }

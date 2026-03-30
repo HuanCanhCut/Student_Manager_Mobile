@@ -15,6 +15,9 @@
         android:theme="@style/Theme.StudentManager"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditProfile"
+            android:exported="false" />
+        <activity
             android:name=".ScheduleActivity"
             android:exported="false" />
         <activity
