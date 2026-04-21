@@ -106,6 +106,13 @@ public class ProfileActivity extends BaseActivity {
         email.setText(currentUser.getEmail());
         Date birth = currentUser.getBirthday();
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         if (birth != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             birthday.setText(sdf.format(birth));
