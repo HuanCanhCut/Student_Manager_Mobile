@@ -28,7 +28,7 @@ import java.util.Locale;
 public class ProfileActivity extends BaseActivity {
     UserModelWithOverview currentUser = SessionManager.getInstance().getCurrentUser();
 
-    ImageView avatar, logout_button;
+    ImageView avatar, logout_button, backBtn;
     TextView name, code;
 
     Button editProfileBtn;
@@ -52,6 +52,7 @@ public class ProfileActivity extends BaseActivity {
         name = findViewById(R.id.name);
         code = findViewById(R.id.code);
         logout_button = findViewById(R.id.logout_button);
+        backBtn = findViewById(R.id.backBtn);
 
 
         gpa = findViewById(R.id.gpa);
@@ -87,6 +88,13 @@ public class ProfileActivity extends BaseActivity {
         className.setText(this.currentUser.getClassModel().getName());
         email.setText(this.currentUser.getEmail());
         Date birth = this.currentUser.getBirthday();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         if (birth != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

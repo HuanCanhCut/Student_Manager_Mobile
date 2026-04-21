@@ -2,6 +2,8 @@ package com.example.studentmanager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ public class FeeActivity extends BaseActivity {
     TextView totalDept;
 
     RecyclerView recyclerView;
+    ImageView backBtn;
 
     private FeeAdapter adapter;
 
@@ -56,6 +59,7 @@ public class FeeActivity extends BaseActivity {
         totalDept = findViewById(R.id.total_dept);
         paymentTerm = findViewById(R.id.payment_term);
         recyclerView = findViewById(R.id.recyclerView);
+        backBtn = findViewById(R.id.backBtn);
 
         // Dùng LinearLayoutManager, tắt scroll riêng của RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -66,6 +70,13 @@ public class FeeActivity extends BaseActivity {
 
         adapter = new FeeAdapter();
         recyclerView.setAdapter(adapter);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         SemesterService apiService = ApiClient.getInstance(this).create(SemesterService.class);
         apiService.getWeeks().enqueue(new Callback<GetWeeksResponse>() {
