@@ -53,6 +53,13 @@ public class ProfileActivity extends BaseActivity {
         setupEventListeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        displayUserData();
+    }
+
     private void initViews() {
         avatar = findViewById(R.id.avatar);
         name = findViewById(R.id.name);
